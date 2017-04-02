@@ -46,6 +46,7 @@ var Player = function (x,y) {
     this.y = 404;
 
     this.sprite = 'images/char-boy.png';
+
 }
 
 //reset after player hits the water
