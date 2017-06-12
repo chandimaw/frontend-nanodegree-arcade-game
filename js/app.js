@@ -1,5 +1,10 @@
-
 var enemySpeed = 200;
+
+//SuperClass = Character
+var Character = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
 // Enemies our player must avoid
 var Enemy = function(x,y,speed) {
 
@@ -8,7 +13,7 @@ var Enemy = function(x,y,speed) {
     this.sprite = 'images/enemy-bug.png';
 
     this.x = x;
-	  this.y = y;
+    this.y = y;
 
     this.speed = Math.floor(200 + (Math.random() * enemySpeed));
 };
@@ -22,9 +27,12 @@ Enemy.prototype.update = function(dt) {
     this.x = this.x + (this.speed * dt);
 
     if (this.x > 550){
+
       this.x = -100;
       this.speed = Math.floor(200 + (Math.random() * enemySpeed));
+
       if (this.y > 226){
+
         this.y = 60;
       }
     }
@@ -32,7 +40,8 @@ Enemy.prototype.update = function(dt) {
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    Character.call(this);
+    // ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 // Now write your own player class
@@ -47,37 +56,48 @@ var Player = function (x,y) {
 
     this.sprite = 'images/char-boy.png';
 
-}
+};
 
 //reset after player hits the water
 Player.prototype.update = function() {
 
-  if (this.y < 10)
-  {
+  if (this.y < 10){
+
     alert('Congratulations!');
-    player.reset();
+    this.reset();
+
   }
 };
 
 Player.prototype.render = function() {
-	ctx.drawImage (Resources.get(this.sprite), this.x, this.y);
-}
+    Character.call(this);
+	// ctx.drawImage (Resources.get(this.sprite), this.x, this.y);
+};
 
 //ensure that the player is within the board
 Player.prototype.handleInput = function(direction) {
+
 	if(direction == 'left' && this.x > 0) {
+
 		this.x -= 100;
+
 	}
 	if(direction == 'right' && this.x < 350) {
+
 		this.x += 100;
+
 	}
 	if(direction == 'up' && this.y > 50) {
+
 		this.y -= 100;
+
 	}
 	if(direction == 'down' && this.y < 400) {
+
 		this.y += 100;
+
 	}
-}
+};
 
 
 //Reset function to bring player back to starting Y coordinate
@@ -85,7 +105,8 @@ Player.prototype.reset = function() {
 
   this.x = 202;
   this.y = 404;
-}
+
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -104,23 +125,27 @@ var checkCollisions = function() {
 
   allEnemies.forEach(function(enemy) {
 
-  if(enemy.x < player.x + 30 && enemy.x + 60 > player.x && enemy.y < player.y + 60 && enemy.y + 40 > player.y)
-    {
+  if(enemy.x < player.x + 30 && enemy.x + 60 > player.x && enemy.y < player.y + 60 && enemy.y + 40 > player.y){
+
         alert('Too bad, try again!');
 		    player.reset();
+
 	     }
 	});
-}
+};
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
+
     var allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
         40: 'down'
+
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
+
 });
