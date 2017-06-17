@@ -76,27 +76,32 @@ Player.prototype.render = function() {
 
 //ensure that the player is within the board
 Player.prototype.handleInput = function(direction) {
+  switch (direction){
+    case 'left':
+    if (this.x >= 101){
+      this.x -= 101;
+    }
+    break;
 
-	if(direction == 'left' && this.x > 0) {
+    case 'right':
+    if (this.x <= 303){
+      this.x += 101;
+    }
+    break;
 
-		this.x -= 100;
+    case 'up':
+    if (this.y >= 55){
+      this.y -= 83;
+    }
+    break;
 
-	}
-	if(direction == 'right' && this.x < 350) {
 
-		this.x += 100;
-
-	}
-	if(direction == 'up' && this.y > 50) {
-
-		this.y -= 100;
-
-	}
-	if(direction == 'down' && this.y < 400) {
-
-		this.y += 100;
-
-	}
+    case 'down':
+    if (this.y <= 321){
+      this.y += 83;
+    }
+    break;
+  }
 };
 
 
